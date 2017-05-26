@@ -42,7 +42,7 @@ ldap_groups:
 # Connection parameters to PostgreSQL server
 # see also: http://rubydoc.info/gems/pg/PG/Connection#initialize-instance_method
 pg_connection:
-  host: localhost
+  host: <%=ENV['AD_ROLES_SYNC_DB_HOST']%>
   dbname: <%=ENV['AD_ROLES_SYNC_DB_NAME']%>
   user: <%=ENV['AD_ROLES_SYNC_DB_USER']%>
   password: <%=ENV['AD_ROLES_SYNC_DB_PASSWORD']%>
