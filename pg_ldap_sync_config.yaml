@@ -1,0 +1,63 @@
+#gz_sync.yaml config for greenzone
+# groups/users from is done by the membership to ldap_user and
+# ldap_group. These two roles has to be defined manally before
+# pg_ldap_sync can run.
+
+# Connection parameters to LDAP server
+# see also: http://net-ldap.rubyforge.org/Net/LDAP.html#method-c-new
+ldap_connection:
+  host: <%=ENV['AD_ROLES_SYNC_LDAP_HOST']%>
+  port: 389
+  auth:
+    method: :simple
+    username: <%=ENV['AD_ROLES_SYNC_LDAP_USERNAME']%>
+    password: <%=ENV['AD_ROLES_SYNC_LDAP_PASSWORD']%>
+
+# Search parameters for LDAP users which should be synchronized
+ldap_users:
+  base: DC=office,DC=atlassian,DC=com
+  # LDAP filter (according to RFC 2254)
+  # defines to users in LDAP to be synchronized
+  filter: (|(&(objectClass=person)(memberOf:1.2.840.113556.1.4.1941:=CN=orders-db-dl-readonly,OU=access,OU=groups,DC=office,DC=atlassian,DC=com)))
+  # this attribute is used as PG role name
+  name_attribute: name
+  # lowercase name for use as PG rol:e name
+  lowercase_name: true
+  #CK 0.1.2 Added for testing to skip DROP if multiple configs are used
+  #nodrop: false
+
+# Search parameters for LDAP groups which should be synchronized
+ldap_groups:
+  base: OU=access,OU=groups,DC=office,DC=atlassian,DC=com
+  filter: (CN=do--not--sync--groups)
+  # this attribute is used as PG role name
+  name_attribute: cn
+  # lowercase name for use as PG role name
+  lowercase_name: true
+  # this attribute must reference to all member DN's of the given group
+  member_attribute: member
+  #CK 0.1.2 Whether to append the ldap_users base_dn ot not. (this allows matching for posixGroups)
+  #append_base: false
+
+# Connection parameters to PostgreSQL server
+# see also: http://rubydoc.info/gems/pg/PG/Connection#initialize-instance_method
+pg_connection:
+  host: localhost
+  dbname: <%=ENV['AD_ROLES_SYNC_DB_NAME']%>
+  user: <%=ENV['AD_ROLES_SYNC_DB_USER']%>
+  password: <%=ENV['AD_ROLES_SYNC_DB_PASSWORD']%>
+
+pg_users:
+  # Filter for identifying LDAP generated users in the database.
+  # It's the WHERE-condition to "SELECT rolname, oid FROM pg_roles"
+  filter: oid IN (SELECT pam.member FROM pg_auth_members pam JOIN pg_roles pr ON pr.oid=pam.roleid WHERE pr.rolname='hams-readonly')
+  # Options for CREATE RULE statements
+  create_options: LOGIN IN ROLE "hams-readonly" CONNECTION LIMIT 10
+
+pg_groups:
+  # Filter for identifying LDAP generated groups in the database.
+  # It's the WHERE-condition to "SELECT rolname, oid FROM pg_roles"
+  filter: oid IN (SELECT pam.member FROM pg_auth_members pam JOIN pg_roles pr ON pr.oid=pam.roleid WHERE pr.rolname='ldap_groups')
+  # Options for CREATE RULE statements
+  create_options: NOLOGIN IN ROLE ldap_groups
+  grant_options:
