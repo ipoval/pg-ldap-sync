@@ -1,6 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'rubygems'
 require 'net/ldap'
 require 'optparse'
 require 'yaml'

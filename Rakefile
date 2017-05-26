@@ -1,6 +1,3 @@
-# -*- ruby -*-
-
-require 'rubygems'
 require 'hoe'
 
 Hoe.spec 'pg-ldap-sync' do

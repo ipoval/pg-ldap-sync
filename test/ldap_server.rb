@@ -4,7 +4,6 @@
 # It does no validation or authentication. This is intended just to
 # demonstrate the API, it's not for real-world use!!
 
-require 'rubygems'
 require 'ldap/server'
 
 # We subclass the Operation class, overriding the methods to do what we need
