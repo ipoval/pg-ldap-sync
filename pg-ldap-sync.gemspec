@@ -6,16 +6,17 @@ Gem::Specification.new do |s|
   s.description = "Sync AD LDAP users/groups with Postgresql roles"
   s.authors     = ["Atlassian"]
   s.email       = 'ipovalyukhin@atlassian.com'
-  s.files       = [ "README.rdoc",
-                    "lib/pg_ldap_sync.rb",
-                    "lib/pg_ldap_sync/application.rb",
-                    "bin/pg_ldap_sync",
-                    "config/pg_ldap_sync_config.yaml", ]
   s.homepage    = 'http://rubygems.org/gems/pg-ldap-sync'
   s.license     = 'MIT'
 
-  s.bindir      = 'bin'
-  s.required_ruby_version = '>= 1.8.6'
+  s.bindir      = "bin"
+  s.files       = [ "README.rdoc",
+                    "lib/pg_ldap_sync.rb",
+                    "lib/pg_ldap_sync/application.rb",
+                    "bin/pg_ldap_sync_bin",
+                    "config/pg_ldap_sync_config.yaml", ]
+
+  s.required_ruby_version = '> 1.8.6'
 
   s.add_runtime_dependency "net-ldap", "0.16.0"
   s.add_runtime_dependency "kwalify", "0.7.2"
