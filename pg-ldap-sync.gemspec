@@ -9,12 +9,15 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://rubygems.org/gems/pg-ldap-sync'
   s.license     = 'MIT'
 
-  s.bindir      = "bin"
   s.files       = [ "README.rdoc",
                     "lib/pg_ldap_sync.rb",
                     "lib/pg_ldap_sync/application.rb",
                     "bin/pg_ldap_sync_bin",
                     "config/pg_ldap_sync_config.yaml", ]
+
+  s.executables   = ["pg_ldap_sync_bin"]
+  s.require_paths = ["lib"]
+  s.bindir        = "bin"
 
   s.required_ruby_version = '> 1.8.6'
 
