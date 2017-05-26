@@ -10,7 +10,7 @@ ldap_connection:
   port: 389
   auth:
     method: :simple
-    username: <%=ENV['AD_ROLES_SYNC_LDAP_USERNAME']%>
+    username: <%=ENV['AD_ROLES_SYNC_LDAP_USER']%>
     password: <%=ENV['AD_ROLES_SYNC_LDAP_PASSWORD']%>
 
 # Search parameters for LDAP users which should be synchronized

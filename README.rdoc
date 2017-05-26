@@ -57,6 +57,10 @@ but doesn't need compilation:
 
 == USAGE:
 
+DEV ENV DRY-RUN
+source env.dev.secret
+pg_ldap_sync -c config/pg_ldap_sync_config.yaml -vv -t # runs in dry-run mode
+
 Create a config file based on
 {config/sample-config.yaml}[https://github.com/larskanis/pg-ldap-sync/blob/master/config/sample-config.yaml]
 or even better
