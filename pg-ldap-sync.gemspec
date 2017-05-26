@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
                     "lib/pg_ldap_sync.rb",
                     "lib/pg_ldap_sync/application.rb",
                     "bin/pg_ldap_sync_bin",
+                    "config/schema.yaml",
                     "config/pg_ldap_sync_config.yaml", ]
 
   s.executables   = ["pg_ldap_sync_bin"]
