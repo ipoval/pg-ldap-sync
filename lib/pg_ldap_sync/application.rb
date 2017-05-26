@@ -5,6 +5,7 @@ require 'net/ldap'
 require 'optparse'
 require 'yaml'
 require 'logger'
+require 'erb'
 require 'kwalify'
 
 begin
