@@ -50,7 +50,7 @@ pg_connection:
 pg_users:
   # Filter for identifying LDAP generated users in the database.
   # It's the WHERE-condition to "SELECT rolname, oid FROM pg_roles"
-  filter: oid IN (SELECT pam.member FROM pg_auth_members pam JOIN pg_roles pr ON pr.oid=pam.roleid WHERE pr.rolname='hams-readonly')
+  filter: oid IN (SELECT pam.member FROM pg_auth_members pam JOIN pg_roles pr ON pr.oid=pam.roleid WHERE pr.rolname='hams-readonly') AND rolname NOT IN ('blackline_bot_ro', 'cardrecon_user', 'growth_bot', 'newrelic', 'ordersdb-schema-bot', 'pursre_orders_db_ro', 'splunk_ro')
   # Options for CREATE RULE statements
   create_options: LOGIN IN ROLE "hams-readonly" CONNECTION LIMIT 10
 
